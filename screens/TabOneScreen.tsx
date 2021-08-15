@@ -1,32 +1,32 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { Text, View,Image , StyleSheet} from 'react-native'
 
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
 
 export default function TabOneScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabOneScreen.tsx" />
+    <View>
+      <Image 
+      source={ {uri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/elon.png'}} 
+      style={Styles.image}
+      />
+      <View>
+        <View>
+          <Text>Elon Musk</Text>
+          <Text>11:11 AM</Text>
+        </View>
+      </View>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
+
+const Styles = StyleSheet.create({
+    container:{
+
+    },
+    image: {
+      height: 100,
+      width: 100
+    }
+
+})
