@@ -3,15 +3,18 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme, DarkTheme, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import { ColorSchemeName } from 'react-native';
+import { ColorSchemeName, Text, Image, View, useWindowDimensions, Pressable } from 'react-native';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
-import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
+
+import { ChatRoomScreen } from '../screens/ChatRoomScreen';
+import { HomeScreen } from '../screens/HomeScreen';
+import { Feather } from '@expo/vector-icons';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -29,9 +32,78 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Root" component={BottomTabNavigator} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ headerTitle: HomeHeader }}
+      />
+      <Stack.Screen
+        name="ChatRoom"
+        component={ChatRoomScreen}
+        options={{
+          headerTitle: ChatRoomHeader,
+          headerBackTitleVisible: false,
+        }}
+      />
+
+     
+      <Stack.Screen
+        name="NotFound"
+        component={NotFoundScreen}
+        options={{ title: 'Oops!' }}
+      />
     </Stack.Navigator>
   );
+}
+
+const HomeHeader = (props) => {
+
+  const { width } = useWindowDimensions();
+  const navigation = useNavigation();
+
+  return (
+    <View style={{
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      width,
+      padding: 10,
+      alignItems: 'center',
+    }}>
+      <Image
+        source={{ uri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim.jpg' }}
+        style={{ width: 30, height: 30, borderRadius: 30 }}
+      />
+      <Text style={{ flex: 1, textAlign: 'center', marginLeft: 50, fontWeight: 'bold' }}>Signal</Text>
+      <Feather name="camera" size={24} color="black" style={{ marginHorizontal: 10 }} />
+      <Pressable onPress={() => navigation.navigate('UsersScreen')}>
+        <Feather name="edit-2" size={24} color="black" style={{ marginHorizontal: 10 }} />
+      </Pressable>
+    </View>
+  )
+}
+
+const ChatRoomHeader = (props) => {
+  const { width } = useWindowDimensions();
+  console.log(props);
+
+
+  return (
+    <View style={{
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      width: width - 80,
+      marginLeft: 25,
+      padding: 10,
+      alignItems: 'center',
+    }}>
+      <Image
+        source={{ uri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim.jpg' }}
+        style={{ width: 30, height: 30, borderRadius: 30 }}
+      />
+      <Text style={{ flex: 1, marginLeft: 10, fontWeight: 'bold' }}>{props.children}</Text>
+      <Feather name="camera" size={24} color="black" style={{ marginHorizontal: 10 }} />
+      <Feather name="edit-2" size={24} color="black" style={{ marginHorizontal: 10 }} />
+    </View>
+  )
 }
