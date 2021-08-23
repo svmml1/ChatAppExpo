@@ -138,7 +138,6 @@ Parameters:
   adminQueries:
     Type: String
             
-            
   
   thirdPartyAuth:
     Type: String
@@ -153,6 +152,27 @@ Parameters:
             
         
   dependsOn:
+    Type: CommaDelimitedList
+      
+  triggers:
+    Type: String
+  
+            
+  
+  hostedUI:
+    Type: String
+            
+            
+      
+  parentStack:
+    Type: String
+        
+  
+  breakCircularDependency:
+    Type: String
+            
+        
+  permissions:
     Type: CommaDelimitedList
       
 Conditions:
